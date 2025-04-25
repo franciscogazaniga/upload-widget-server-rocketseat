@@ -32,7 +32,7 @@ server.setErrorHandler((error, request, reply) => {
 
 server.register(fastifyCors, { origin: '*' })
 
-server.register(fastifyMultipart) // allow access to the file in upload-image
+server.register(fastifyMultipart) // allow to access the file in route upload-image
 server.register(fastifySwagger, {
   openapi: {
     info: {
@@ -40,7 +40,7 @@ server.register(fastifySwagger, {
       version: '1.0.0',
     },
   },
-  transform: transformSwaggerSchema, // transform the structure schema of upload-image in the structure of swagger
+  transform: transformSwaggerSchema, // transform the structure schema of route upload-image in the structure of swagger
 })
 
 server.register(fastifySwaggerUi, { routePrefix: 'docs' })

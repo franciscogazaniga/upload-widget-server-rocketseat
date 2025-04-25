@@ -1,5 +1,4 @@
-import { db } from '@/infra/db'
-import { schema } from '@/infra/db/schemas'
+import { uploadImage } from '@/app/functions/upload-image'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
@@ -12,9 +11,7 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async server => {
         consumes: ['multipart/form-data'], // convencional format to send files
         response: {
           201: z.object({ uploadId: z.string() }),
-          400: z
-            .object({ message: z.string() })
-            .describe('Upload already exists.'),
+          400: z.object({ message: z.string() }),
         },
       },
     },
@@ -25,7 +22,15 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async server => {
         },
       })
 
-      console.log(uploadedFile)
+      if (!uploadedFile) {
+        return reply.status(400).send({ message: 'File is required.' })
+      }
+
+      await uploadImage({
+        fileName: uploadedFile.filename,
+        contentType: uploadedFile.mimetype,
+        contentStream: uploadedFile.file, // Ao utilizar stream somente pequenos pedaços do arquivo são armazenados em memória, o envio do arquivo é feito em múltiplas partes
+      })
 
       return reply.status(201).send({ uploadId: 'teste' })
     }
