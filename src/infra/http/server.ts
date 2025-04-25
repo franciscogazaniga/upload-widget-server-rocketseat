@@ -5,11 +5,11 @@ import { fastifySwaggerUi } from '@fastify/swagger-ui'
 import fastify from 'fastify'
 import {
   hasZodFastifySchemaValidationErrors,
-  jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 import { uploadImageRoute } from './routes/upload-image'
+import { transformSwaggerSchema } from './transform-swagger-schema'
 
 const server = fastify()
 
@@ -32,7 +32,7 @@ server.setErrorHandler((error, request, reply) => {
 
 server.register(fastifyCors, { origin: '*' })
 
-server.register(fastifyMultipart)
+server.register(fastifyMultipart) // allow access to the file in upload-image
 server.register(fastifySwagger, {
   openapi: {
     info: {
@@ -40,7 +40,7 @@ server.register(fastifySwagger, {
       version: '1.0.0',
     },
   },
-  transform: jsonSchemaTransform,
+  transform: transformSwaggerSchema, // transform the structure schema of upload-image in the structure of swagger
 })
 
 server.register(fastifySwaggerUi, { routePrefix: 'docs' })
