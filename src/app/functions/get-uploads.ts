@@ -15,7 +15,7 @@ const getUploadsInput = z.object({
 type GetUploadsInput = z.input<typeof getUploadsInput>
 type GetUploadsOutput = {
   total: number
-  upload: Array<{
+  uploads: Array<{
     id: string
     name: string
     remoteKey: string
@@ -31,7 +31,7 @@ export async function getUploads(
   const { page, pageSize, searchQuery, sortBy, sortDirection } =
     getUploadsInput.parse(input)
 
-  const [upload, [{ total }]] = await Promise.all([
+  const [uploads, [{ total }]] = await Promise.all([
     db
       .select({
         id: schema.uploads.id,
@@ -65,5 +65,5 @@ export async function getUploads(
       ),
   ])
 
-  return makeRight({ upload, total: Number(total) })
+  return makeRight({ uploads, total: Number(total) })
 }

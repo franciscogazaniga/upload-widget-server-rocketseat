@@ -21,7 +21,7 @@ describe('get uploads', () => {
 
     expect(isRight(sut)).toBe(true)
     expect(unwrapEither(sut).total).toEqual(5)
-    expect(unwrapEither(sut).upload).toEqual([
+    expect(unwrapEither(sut).uploads).toEqual([
       expect.objectContaining({
         id: upload5.id,
       }),
@@ -57,7 +57,7 @@ describe('get uploads', () => {
 
     expect(isRight(sut)).toBe(true)
     expect(unwrapEither(sut).total).toEqual(5)
-    expect(unwrapEither(sut).upload).toEqual([
+    expect(unwrapEither(sut).uploads).toEqual([
       expect.objectContaining({
         id: upload5.id,
       }),
@@ -77,7 +77,7 @@ describe('get uploads', () => {
 
     expect(isRight(sut)).toBe(true)
     expect(unwrapEither(sut).total).toEqual(5)
-    expect(unwrapEither(sut).upload).toEqual([
+    expect(unwrapEither(sut).uploads).toEqual([
       expect.objectContaining({
         id: upload2.id,
       }),
@@ -119,7 +119,7 @@ describe('get uploads', () => {
 
     expect(isRight(sut)).toBe(true)
     expect(unwrapEither(sut).total).toEqual(5)
-    expect(unwrapEither(sut).upload).toEqual([
+    expect(unwrapEither(sut).uploads).toEqual([
       expect.objectContaining({
         id: upload1.id,
       }),
@@ -145,7 +145,7 @@ describe('get uploads', () => {
 
     expect(isRight(sut)).toBe(true)
     expect(unwrapEither(sut).total).toEqual(5)
-    expect(unwrapEither(sut).upload).toEqual([
+    expect(unwrapEither(sut).uploads).toEqual([
       expect.objectContaining({
         id: upload5.id,
       }),
