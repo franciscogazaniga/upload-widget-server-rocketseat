@@ -32,7 +32,7 @@ server.setErrorHandler((error, request, reply) => {
   return reply.status(500).send({ message: 'Internal server error' })
 })
 
-server.register(fastifyCors, { origin: '*' })
+server.register(fastifyCors, { origin: '*' }) // allow CORS for all origins
 
 server.register(fastifyMultipart) // allow to access the file in route upload-image
 server.register(fastifySwagger, {

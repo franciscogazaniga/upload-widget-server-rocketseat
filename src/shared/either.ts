@@ -45,6 +45,6 @@ export const unwrapEither: UnwrapEither = <T, U>({
   )
 }
 
-export const makeLeft = <T>(value: T): Left<T> => ({ left: value })
+export const makeLeft = <T>(value: T): Left<T> => ({ left: value }) // makeLeft creates a Left Either
 
 export const makeRight = <U>(value: U): Right<U> => ({ right: value })
