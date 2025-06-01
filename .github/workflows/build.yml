@@ -33,6 +33,7 @@ jobs:
 
       - name: Build and export image
         id: build_export_image
+        uses: docker/build-push-action@v6
         with:
           context: .
           load: true
