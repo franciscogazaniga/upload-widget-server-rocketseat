@@ -21,14 +21,38 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Set up Docker Buildx
+        id: setup_buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Generate tag
         id: generate_tag
         run: |
           SHA=$(echo $GITHUB_SHA | head -c7)
           echo "sha=$SHA" >> $GITHUB_OUTPUT
 
+      - name: Build and export image
+        id: build_export_image
+        with:
+          context: .
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: $DOCKERHUB_REPOSITORY:test
+
+      - name: Run Trivy vulnerability scanner
+        id: trivy_scan
+        uses: aquasecurity/trivy-action@0.29.0
+        with:
+          image-ref: '$DOCKERHUB_REPOSITORY:test'
+          format: 'table'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
       - name: Build and push image to DockerHub
         id: build_push_image
+        cache-from: type=gha
         env:
           DOCKERHUB_REPOSITORY: ${{ vars.DOCKERHUB_REPOSITORY }}
           IMAGE_TAG: ${{ steps.generate_tag.outputs.sha }}
