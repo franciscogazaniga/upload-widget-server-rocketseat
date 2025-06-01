@@ -52,5 +52,5 @@ server.register(getUploadsRoute)
 server.register(exportUploadsRoute)
 
 server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
-  console.log('HTTP Server Running...')
+  console.log('HTTP Server Running....')
 })
