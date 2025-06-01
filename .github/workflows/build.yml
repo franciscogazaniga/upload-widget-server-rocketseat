@@ -39,13 +39,13 @@ jobs:
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          tags: $DOCKERHUB_REPOSITORY:test
+          tags: ${{ vars.DOCKERHUB_REPOSITORY }}:test
 
       - name: Run Trivy vulnerability scanner
         id: trivy_scan
         uses: aquasecurity/trivy-action@0.29.0
         with:
-          image-ref: '$DOCKERHUB_REPOSITORY:test'
+          image-ref: '${{ vars.DOCKERHUB_REPOSITORY }}:test'
           format: 'table'
           ignore-unfixed: true
           vuln-type: 'os,library'
