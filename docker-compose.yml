@@ -9,3 +9,17 @@ services:
       - POSTGRES_DB=upload
     volumes:
       - './docker:/docker-entrypoint-initdb.d'
+
+  app:
+    build: .
+    depends_on:
+      - pg
+    container_name: widget-server
+    ports:
+      - 3000:3333
+    environment:
+      - CLOUDFLARE_ACCOUNT_ID=#
+      - CLOUDFLARE_ACCESS_KEY_ID=#
+      - CLOUDFLARE_SECRET_ACCESS_KEY=#
+      - CLOUDFLARE_BUCKET=upload-server
+      - CLOUDFLARE_PUBLIC_URL=https://pub-92286aefdcd14074b4693c4aaad9d25f.r2.dev
